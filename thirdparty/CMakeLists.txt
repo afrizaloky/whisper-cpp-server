@@ -1,4 +1,17 @@
+execute_process(
+    COMMAND git submodule update --init --recursive --recommend-shallow
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+    ECHO_OUTPUT_VARIABLE
+    ECHO_ERROR_VARIABLE
+    COMMAND_ERROR_IS_FATAL ANY
+)
+
 set(CMAKE_TOOLCHAIN_FILE "${CMAKE_CURRENT_SOURCE_DIR}/vcpkg/scripts/buildsystems/vcpkg.cmake" CACHE STRING "vcpkg toolchain file")
+if(WIN32)
+    set(VCPKG_TARGET_TRIPLET "x64-mingw-dynamic")
+    set(ENV{VCPKG_DEFAULT_TRIPLET} "x64-mingw-dynamic")
+    set(ENV{VCPKG_DEFAULT_HOST_TRIPLET} "x64-mingw-dynamic")
+endif()
 include("$CACHE{CMAKE_TOOLCHAIN_FILE}")
 
 # find uWebSockets head file path

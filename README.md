@@ -46,6 +46,14 @@ Whisper-CPP-Server is suitable for a variety of applications that require fast a
 - Automatic translation of multi-language content
 
 ## How to build it 
+### Prerequisite for Windows
+1. Download clang https://github.com/mstorsjo/llvm-mingw/releases/download/20230320/llvm-mingw-20230320-ucrt-x86_64.zip
+2. Download ninja https://ninja-build.org/
+3. Install CMake
+4. Add clang and ninja to PATH
+5. Use VSCode and set compiler to clang mingw
+6. Build using cmake
+
 build with cmake and vcpkg
 ```
 git clone https://github.com/litongjava/whisper-cpp-server.git

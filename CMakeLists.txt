@@ -13,7 +13,11 @@ target_include_directories(audio_vad PRIVATE ${SPEEXDSP_INCLUDE_DIRS})
 
 
 add_executable(sdl_version examples/sdl_version.cpp)
-target_link_libraries(sdl_version PRIVATE SDL2::SDL2-static)
+if (WIN32)
+        target_link_libraries(sdl_version PRIVATE SDL2::SDL2)
+else()
+        target_link_libraries(sdl_version PRIVATE SDL2::SDL2-static)
+endif()
 
 add_executable(simplest examples/simplest.cpp common/common.cpp common/utils.cpp)
 target_link_libraries(simplest PRIVATE whisper SampleRate::samplerate nlohmann_json::nlohmann_json dr_lib_header-only)
@@ -22,8 +26,13 @@ add_executable(stream_local examples/stream_local.cpp common/common.cpp common/c
         stream/stream_components_service.cpp stream/stream_components_audio.cpp
         stream/stream_components_output.cpp
         )
-target_link_libraries(stream_local whisper SDL2::SDL2-static SampleRate::samplerate nlohmann_json::nlohmann_json dr_lib_header-only)
+target_link_libraries(stream_local whisper SampleRate::samplerate nlohmann_json::nlohmann_json dr_lib_header-only)
 
+if (WIN32)
+        target_link_libraries(stream_local SDL2::SDL2)
+else()
+        target_link_libraries(stream_local SDL2::SDL2-static)
+endif()
 add_executable(whisper_http_server_base_httplib whisper_http_server_base_httplib.cpp
         common/common.cpp common/utils.cpp handler/inference_handler.cpp params/whisper_params.cpp
         common/common-m4a.cpp handler/ws_save_handler.h)
